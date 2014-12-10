@@ -1,0 +1,117 @@
+%% PhDReportLT.sty
+%% Created by  Albertas Gimbutas  2014
+%
+%%  License CC BY 4.0 (see more at http://creativecommons.org/licenses/by/4.0/) 
+% You are free to (a) share - copy and redistribute the material in any medium
+% or format (b) adapt - remix, transform, and build upon the material for any
+% purpose, even commercially. As long as you give appropriate credit, provide a
+% link to the license, and indicate if changes were made.
+
+%% Doktorantų metinės ataskaitos šablonas, atitinkantis VU MII reikalavimus
+\ProvidesPackage{PhDActivityReportLT}[
+    2014/10/08 1.0 PhD Yearly Report Style suitable for VU MII]
+
+%% Paketų priklausomybės
+\RequirePackage[lithuanian]{babel}  % Lietuvybės palaikymas
+\RequirePackage{LTPlius}  % Lietuvybės patobulinimai
+\RequirePackage{vmargin}  % Paraščių nustatymui
+\RequirePackage{setspace} % Intervalo tarp eilučių nustatymui
+\RequirePackage[T1]{fontenc} % Teksto koduotei nustatyti
+\RequirePackage{pgf}      % Paveikslėlių įterpimui į norimą vietą 
+\RequirePackage[
+    colorlinks=true,
+    urlcolor=blue,
+    linkcolor=black,
+]{hyperref}
+\RequirePackage{tabularx} % Plačioms lentelems su spalvotom briaunom
+\RequirePackage{ctable}   % Pastorinti arba nuspalvinti lentelės briaunoms
+\RequirePackage{fancyhdr}
+\RequirePackage{graphicx}
+% \RequirePackage{algpseudocode}
+\RequirePackage{algorithm}
+% \RequirePackage{algorithmicx}
+\RequirePackage{caption}
+\RequirePackage{enumitem}
+\RequirePackage{pifont}
+
+%% Nustatymai
+\setlist{nolistsep}
+%\setlist[itemize,1]{itemsep=0pt}
+\setpapersize[portrait]{A4}   % Lapo formatas
+\setlength{\parindent}{0.7cm} % Pirmos eilutes atitraukimas
+% \setlength{\parskip}{0.35cm}  % Tarpai tarp paragrafų
+\renewcommand*\rmdefault{ppl} % 'Serif' šriftas visame dokumente (Palatino)  
+\sloppy  % Tolygiai paskirsto tekstą nuo kairės iki dešinės paraštės
+\setlength{\textheight}{665pt} % Puslapio bloko dydį padidiname, kad galėtumėme
+                               % nustatyti apatinės paraštės aukštį pirmame psl.
+% \@noltindent                 % Pašalina pirmosios skyriaus eilutės indentavimą
+
+\pagestyle{empty}       % Pašalina puslapių numeravimą bei antraštes
+
+% Nedėti taško po skyriaus pavadinimo
+\RequirePackage{titlesec} % Lanksčiam skyrių pavadinimų formatavimui
+\titleformat{\section}
+{\normalfont\Large\bfseries}   % Skyriaus pavadinimo šriftas
+{\thesection}{12pt}{}       % Skyriaus numerio formatavimas, tarpas po numerio 
+
+
+%% Literatūros sąrašas
+% Nustatomas lietuviškas literatūros sąrašo pavadinimas 
+\addto\captionslithuanian{%
+    \renewcommand{\refname}{\emph{Literat\={u}ros s\k{a}ra\v{s}as}}%
+}
+
+% Nustatomas literatūros sąrašo turinyje stilius
+\let\oldbibliography\bibliography
+\newcommand\noemph[1]{\bgroup\let\emph\relax#1\egroup} % Pašalinti kursyvą
+\renewcommand{\bibliography}[1]{%
+    \addcontentsline{toc}{section}{\noemph{\refname}}%
+    \bibliographystyle{alpha}%
+    \oldbibliography{#1}%
+}
+
+
+\setmarginsrb{3cm}{0.5cm}{1.5cm}{1.5cm}{12pt}{20pt}{0pt}{20pt}%
+\newcommand\documenttitle[2]{
+    \begin{center}
+        \onehalfspacing % doublespacing
+    {\Large #1 \MakeUppercase{#2}}\par
+    {\Large ataskaita už \the\numexpr\year-1\relax /\the\year\ mokslo metus}\par
+    \end{center}
+    \medskip
+}
+\newcommand\thesistitle[1]{
+    \noindent \textbf{Disertacijos pavadinimas:}\; #1 \par \bigskip}
+\newcommand\supervisor[1]{
+    \noindent \textbf{Darbo vadovas:}\; #1 \par \bigskip}
+\newcommand\phdstartendyear[1]{
+    \noindent \textbf{Doktorantūros pradžios ir pabaigos metai:}\; #1 \par \bigskip}
+\newcommand\arrowlist[2]{
+\noindent \textbf{#1:} \begin{itemize}#2\end{itemize} \par \bigskip}
+\newcommand\researchobject[1]{
+    \noindent \textbf{Tyrimo objektas:} #1 \par \bigskip}
+\newcommand\researchpurpose[1]{
+    \noindent \textbf{Tyrimo tikslas:} #1 \par \bigskip}
+\newcommand\planforpreviousyear[1]{
+    \arrowlist{\the\numexpr\year-1\relax /\the\year\ m. m. darbo planas}{#1}}
+\newcommand\reportforpreviousyear[0]{
+    \noindent \textbf{Ataskaita už \the\numexpr\year-1\relax /\the\year\ mokslo metus:} \par\bigskip}
+\newcommand\tasksdone[1]{
+    \arrowlist{\the\numexpr\year-1\relax /\the\year\ m. m. atlikti darbai}{#1}}
+\newcommand\planfornextyear[1]{
+    \arrowlist{\the\year/\the\numexpr\year+1\relax\ m. m. darbo planas}{#1}}
+
+\newcommand\supervisorsignarture[1]{
+    \bigskip \noindent
+    \begin{tabularx}{\textwidth}{ p{8cm}  p{7cm} }
+    MII vyriausiasis mokslo darbuotojas & #1
+    \end{tabularx}\par\bigskip}
+
+\newcommand\phdcandidatesignarture[2]{
+    \bigskip \noindent
+    \begin{tabularx}{\textwidth}{ p{8cm}  p{7cm} }
+        #1 & #2\\
+        \today &
+    \end{tabularx}\par\bigskip}
+
+\newcommand*\arrow{\item[\ding{226}]}
